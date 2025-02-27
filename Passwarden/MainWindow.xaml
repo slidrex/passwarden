@@ -11,7 +11,7 @@
             <MenuItem Header="Copy pass" Click="CopyPassword_Click"/>
             <MenuItem Header="Copy login" Click="CopyPassword_Click"/>
             <MenuItem Header="Edit" Click="EditButton_Click"/>
-            <MenuItem Header="Delete" />
+            <MenuItem Header="Delete" Click="DeletePass_Click"/>
         </ContextMenu>
     </Window.Resources>
     <Grid>
@@ -140,8 +140,8 @@
 
                 <!-- Кнопки -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content=" Add Tab " Width="Auto" Click="AddTabButton_Click"/>
                     <Button Content=" Settings " Width="Auto"/>
+                    <Button Content=" 🔒Lock " Width="Auto"/>
                 </StackPanel>
             </Grid>
         </Grid>
@@ -150,7 +150,7 @@
                   Grid.Row="1"        
                   VerticalAlignment="Stretch"
                           Margin="5"
-                    Width="Auto">
+                    Width="Auto" SelectionChanged="PrimaryList_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="ContextMenu" Value="{StaticResource PasswordContextMenu}"/>
@@ -188,7 +188,7 @@
             </ListView.ContextMenu>
         </ListView>
         
-        <Button Grid.Row="2" Margin="5" Content="Add new"/>
+        <Button Grid.Row="2" Margin="5" Content="Add new" Click="AddNewPass_Click"/>
     </Grid>
 
 </Window>

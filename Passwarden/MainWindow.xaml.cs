@@ -9,10 +9,11 @@ namespace Passwarden;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private List<ListItem> items;
     public MainWindow()
     {
         InitializeComponent();
-        var items = new List<ListItem>
+        items = new List<ListItem>
             {
                 new ListItem { Username = "user1", Password = "pass123", Priority = "High", Date = DateTime.Now },
                 new ListItem { Username = "user2", Password = "qwerty", Priority = "Medium", Date = DateTime.Now.AddDays(-1) },
@@ -67,6 +68,20 @@ public partial class MainWindow : Window
             }
         }
     }
+    private void DeletePass_Click(object sender, RoutedEventArgs e)
+    {
+        if (PrimaryList.SelectedItem is ListItem selectedItem)
+        {
+            items.Remove(selectedItem);
+            PrimaryList.Items.Refresh();
+        }
+    }
+
+    private void AddNewPass_Click(object sender, RoutedEventArgs e)
+    {
+        items.Add(new ListItem() { Username = "user1", Password = "pass123", Priority = "High", Date = DateTime.Now });
+        PrimaryList.Items.Refresh();
+    }
 
     private void RenameTabMenuItem_Click(object sender, RoutedEventArgs e)
     {
@@ -102,6 +117,11 @@ public partial class MainWindow : Window
             parent = VisualTreeHelper.GetParent(parent);
         }
         return parent as T;
+    }
+
+    private void PrimaryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
     }
 }
 public class ListItem
