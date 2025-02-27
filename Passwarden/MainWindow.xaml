@@ -5,11 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Passwarden"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500">
+        Title="Passwarden" Height="450" Width="500">
+    <Window.Resources>
+        <ContextMenu x:Key="PasswordContextMenu">
+            <MenuItem Header="Copy pass" Click="CopyPassword_Click"/>
+            <MenuItem Header="Copy login" Click="CopyPassword_Click"/>
+            <MenuItem Header="Edit" Click="EditButton_Click"/>
+            <MenuItem Header="Delete" />
+        </ContextMenu>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <!-- Панель с табами и кнопками -->
@@ -24,6 +33,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
+                    
                 </Grid.ColumnDefinitions>
 
                 <!-- Табы -->
@@ -131,36 +141,54 @@
                 <!-- Кнопки -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Content=" Add Tab " Width="Auto" Click="AddTabButton_Click"/>
-                    <Button Content="🔒 Lock" Width="Auto"/>
+                    <Button Content=" Settings " Width="Auto"/>
                 </StackPanel>
             </Grid>
         </Grid>
+        
         <ListView x:Name="PrimaryList"
                   Grid.Row="1"        
-                  VerticalAlignment="Top"
+                  VerticalAlignment="Stretch"
                           Margin="5"
-                          Height="235"
                     Width="Auto">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource PasswordContextMenu}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="Username"
                                 Width="100"
-                                DisplayMemberBinding="{ Binding Id }"/>
+                                DisplayMemberBinding="{ Binding Username }"/>
                         <GridViewColumn Header="Password"
                                 Width="100"
-                                DisplayMemberBinding="{ Binding Content }"/>
+                                DisplayMemberBinding="{ Binding Password }"/>
                         <GridViewColumn Header="URL"
                                 Width="100"
                                 DisplayMemberBinding="{ Binding Priority }"/>
                         <GridViewColumn Header="Modified"
                                 Width="100"
                                 DisplayMemberBinding="{ Binding Date }"/>
+                    
                     </GridView.Columns>
+                    <GridView.ColumnHeaderContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add New"/>
+                        </ContextMenu>
+                    </GridView.ColumnHeaderContextMenu>
                 </GridView>
-            </ListView.View>
 
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add New"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
+        
+        <Button Grid.Row="2" Margin="5" Content="Add new"/>
     </Grid>
 
 </Window>
